@@ -1,0 +1,68 @@
+{
+  "name": "mirador-curation-api-plugin",
+  "version": "0.0.1",
+  "description": "Mirador 3 Plugin to show curations based on Curation API 1.0",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "css",
+    "es",
+    "lib",
+    "umd"
+  ],
+  "scripts": {
+    "build": "NODE_OPTIONS=--openssl-legacy-provider nwb build-react-component",
+    "clean": "nwb clean-module && nwb clean-demo",
+    "prepublishOnly": "npm run build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider nwb serve-react-demo",
+    "test": "nwb test-react",
+    "test:coverage": "nwb test-react --coverage",
+    "test:watch": "nwb test-react --server",
+    "lint": "eslint src/ --ext .js --fix --ignore-path .gitignore",
+    "deploy": "gh-pages -d demo/dist"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "isomorphic-unfetch": "^3.1.0",
+    "prop-types": "^15.8.1",
+    "react-i18next": "^12.0.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0",
+    "redux-saga": "^1.2.1",
+    "reselect": "^4.1.7"
+  },
+  "peerDependencies": {
+    "mirador": "^3.3.0",
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "devDependencies": {
+    "@blueprintjs/core": "^4.12.0",
+    "@blueprintjs/icons": "^4.10.1",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "gh-pages": "^4.0.0",
+    "mirador": "^3.3.0",
+    "nwb": "0.25.x",
+    "prettier": "^2.7.1",
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "author": "mkunten <mkunten@users.noreply.github.com>",
+  "homepage": "./",
+  "license": "MIT",
+  "repository": "https://github.com/mkunten/mirador-curation-api-plugin",
+  "keywords": [
+    "react-component",
+    "mirador",
+    "mirador-3",
+    "Curation API 1.0"
+  ],
+  "private": false
+}
