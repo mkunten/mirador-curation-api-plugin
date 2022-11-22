@@ -8,14 +8,14 @@ import {
 } from 'mirador/dist/es/src/state/selectors';
 import {
   getCurationsOnSelectedCanvases,
-  getCurationsApiConfig,
+  getCurationApiConfig,
 } from '../state/selectors';
 import { CurationsOverlay } from '../components/CurationsOverlay';
 
 const mapStateToProps = (state, { windowId }) => ({
   canvasWorld: getCurrentCanvasWorld(state, { windowId }),
   curations: getCurationsOnSelectedCanvases(state, { windowId }),
-  config: getCurationsApiConfig(state, { windowId }),
+  config: getCurationApiConfig(state, { windowId }),
   palette: getTheme(state).palette,
 });
 

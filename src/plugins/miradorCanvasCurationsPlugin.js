@@ -5,13 +5,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { withPlugins } from 'mirador/dist/es/src/extend/withPlugins';
 import * as actions from 'mirador/dist/es/src/state/actions';
 import { hoverCurations } from '../state/actions';
-import { getCurationsApiConfig } from '../state/selectors';
+import { getCurationApiConfig } from '../state/selectors';
 import { CanvasCurations } from '../components/CanvasCurations';
 
 const mapStateToProps = (state) => {
   if (state) {
     return {
-      ...getCurationsApiConfig(),
+      ...getCurationApiConfig(state),
     };
   }
   return null;

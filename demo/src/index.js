@@ -11,7 +11,7 @@ const config = {
     defaultSideBarPanel: 'curations',
     sideBarOpenByDefault: true,
   },
-  curationsApi: { // default values
+  curationApi: { // default values
     visible: true, // default: true
     listAll: true, // default: true; if false, list only curations belonging to the present manifest file.
     curations: [ // curation json files

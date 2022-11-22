@@ -6,60 +6,25 @@ import {
 } from 'mirador/dist/es/src/state/selectors';
 import { miradorSlice } from 'mirador/dist/es/src/state/selectors/utils';
 
-const defaultCurationsApiConfig = {
-  visible: true,
-  listAll: true,
-  makeLabel: (curation) => {
-    const a = [
-      `<b>index</b>: ${curation.index || '-'}`,
-    ];
-    if (curation.region) {
-      a.push(`<b>region</b>: <span title="${curation.region}">${curation.region}</span>`);
-    }
-    if (curation.label) {
-      a.push(`<b>label</b>: ${curation.label}`);
-    }
-    if (curation.description) {
-      a.push(`<b>desciption</b>: ${curation.description}`);
-    }
-    if (curation.metadata) {
-      curation.matadata.forEach((m) => {
-        a.push(`<b>${m.label}</b>: ${m.value}`);
-      });
-    }
-    return a.join('<br/>');
-  },
-  selectedCurationIds: [], // internal
-};
-
 export const getCurations = (state) => {
   if (miradorSlice(state)) {
-    if (!miradorSlice(state).curations.config) {
-      // should be added through action or saga??
-      miradorSlice(state).curations = {
-        config: {
-          ...(miradorSlice(state).config.curationsApi ?? {}),
-          ...defaultCurationsApiConfig,
-        },
-      };
-    }
     return miradorSlice(state).curations;
   }
-  return { config: defaultCurationsApiConfig };
+  return {};
 };
 
-export const getCurationsApiConfig = createSelector(
+export const getCurationApiConfig = createSelector(
   [getCurations],
   (curations) => curations.config,
 );
 
 export const getCurationIds = createSelector(
-  [getCurationsApiConfig],
+  [getCurationApiConfig],
   ({ curations }) => curations ?? [],
 );
 
 export const getCurationItems = createSelector(
-  [getCurationsApiConfig, getCurations, getManifest],
+  [getCurationApiConfig, getCurations, getManifest],
   ({ listAll }, { items }, { id }) => (listAll
     ? (items ?? []) : (items ?? []).filter(
       (item) => item.manifestId === id,

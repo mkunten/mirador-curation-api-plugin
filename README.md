@@ -23,7 +23,7 @@ const config = {
     // defaultSideBarPanel: 'curations', 
     // sideBarOpenByDefault: true,
   },
-  curationsApi: {
+  curationApi: {
     /* plugin settings */
     /* see demo/src/index.js */
   },
@@ -46,7 +46,7 @@ mirador.viewer(
 ## Todos
 
 - test...
-- <ScrollTo/> in the sidebar panel does not work
+- `<ScrollTo/>` in the sidebar panel does not work
 - to support various patterns of sequences etc.
 - to support IIIF Presentation API 3.0?
 - to show pins? (e.g., in case of {metadata.type: pin}?)

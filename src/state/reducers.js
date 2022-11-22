@@ -6,22 +6,26 @@ export const curationsReducer = (state = {}, action) => {
     case PluginActionTypes.REQUEST_CURATION:
       return {
         ...state,
-        [action.curationUri]: {
-          ...state[action.curationUri],
-          ...action.properties,
-          id: action.curationUri,
-          isFetching: true,
+        curations: {
+          [action.curationUri]: {
+            ...state.curations[action.curationUri],
+            ...action.properties,
+            id: action.curationUri,
+            isFetching: true,
+          },
         },
       };
     case PluginActionTypes.RECEIVE_CURATION:
       return {
         ...state,
-        [action.curationUri]: {
-          ...state[action.curationUri],
-          error: null,
-          id: action.curationUri,
-          isFetching: false,
-          json: action.curationJson,
+        curations: {
+          [action.curationUri]: {
+            ...state.curations[action.curationUri],
+            error: null,
+            id: action.curationUri,
+            isFetching: false,
+            json: action.curationJson,
+          },
         },
         items: [
           ...state.items ?? [],
@@ -31,10 +35,12 @@ export const curationsReducer = (state = {}, action) => {
     case PluginActionTypes.RECEIVE_CURATION_FAILURE:
       return {
         ...state,
-        [action.curationUri]: {
-          error: action.error,
-          id: action.curationUri,
-          isFetching: false,
+        curations: {
+          [action.curationUri]: {
+            error: action.error,
+            id: action.curationUri,
+            isFetching: false,
+          },
         },
       };
     case PluginActionTypes.TOGGLE_CURATION_DISPLAY:
@@ -60,6 +66,10 @@ export const curationsReducer = (state = {}, action) => {
           ...state.config,
           selectedCurationIds: action.curationIds,
         },
+      };
+    case PluginActionTypes.INIT_CURATION_API_CONFIG:
+      return {
+        ...action.curationApiConfig,
       };
     default:
       return state;

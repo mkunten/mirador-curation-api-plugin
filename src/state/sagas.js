@@ -3,14 +3,42 @@ import {
 } from 'redux-saga/effects';
 import fetch from 'isomorphic-unfetch';
 import ActionTypes from 'mirador/dist/es/src/state/actions/action-types';
-import { getRequestsConfig } from 'mirador/dist/es/src/state/selectors';
+import {
+  getConfig, getRequestsConfig,
+} from 'mirador/dist/es/src/state/selectors';
 import {
   PluginActionTypes,
-  receiveCuration, receiveCurationFailure,
+  initCurationApiConfig, receiveCuration, receiveCurationFailure,
 } from './actions';
 import {
-  getCurationsApiConfig, getCanvasIdsAndMap, getCurations,
+  getCurationApiConfig, getCanvasIdsAndMap, getCurations,
 } from './selectors';
+
+const defaultCurationApiConfig = {
+  visible: true,
+  listAll: true,
+  makeLabel: (curation) => {
+    const a = [
+      `<b>index</b>: ${curation.index || '-'}`,
+    ];
+    if (curation.region) {
+      a.push(`<b>region</b>: <span title="${curation.region}">${curation.region}</span>`);
+    }
+    if (curation.label) {
+      a.push(`<b>label</b>: ${curation.label}`);
+    }
+    if (curation.description) {
+      a.push(`<b>desciption</b>: ${curation.description}`);
+    }
+    if (curation.metadata) {
+      curation.matadata.forEach((m) => {
+        a.push(`<b>${m.label}</b>: ${m.value}`);
+      });
+    }
+    return a.join('<br/>');
+  },
+  selectedCurationIds: [], // internal
+};
 
 function fetchWrapper(url, options, { success, degraded, failure }) {
   return fetch(url, options)
@@ -26,7 +54,8 @@ function* fetchCurationResource(url, options, { success, degraded, failure }) {
   const { preprocessors = [], postprocessors = [] } = yield select(getRequestsConfig);
 
   try {
-    const reqOptions = preprocessors.reduce((acc, f) => f(url, acc) || acc, options);
+    const reqOptions = preprocessors
+      .reduce((acc, f) => f(url, acc) || acc, options);
 
     let action = yield call(fetchWrapper, url, reqOptions, {
       degraded, failure, success,
@@ -114,7 +143,7 @@ export function* fetchCuration({ uri }) {
 }
 
 export function* fetchCurations() {
-  const config = yield select(getCurationsApiConfig);
+  const config = yield select(getCurationApiConfig);
   if (!config.curations) {
     return;
   }
@@ -128,9 +157,22 @@ export function* fetchCurations() {
   }
 }
 
+export function* importCurationApiConfig() {
+  const { curationApi } = yield select(getConfig || {});
+  yield put(initCurationApiConfig({
+    config: {
+      ...defaultCurationApiConfig,
+      ...curationApi,
+    },
+    curations: {},
+    items: [],
+  }));
+}
+
 export default function* curationsSaga() {
   yield all([
     takeEvery(ActionTypes.SET_CANVAS, fetchCurations),
     takeEvery(PluginActionTypes.REQUEST_CURATION, fetchCurations),
+    takeEvery(ActionTypes.IMPORT_CONFIG, importCurationApiConfig),
   ]);
 }

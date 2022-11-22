@@ -6,6 +6,7 @@ export const PluginActionTypes = {
   TOGGLE_CURATION_DISPLAY: 'mirador-curation-api-plugin/TOGGLE_CURATION_DISPLAY',
   TOGGLE_CURATION_LIST: 'mirador-curation-api-plugin/TOGGLE_CURATION_LIST',
   HOVER_CURATIONS: 'mirador-curation-api-plugin/HOVER_CURATIONS',
+  INIT_CURATION_API_CONFIG: 'mirador-curation-api-pluin/INIT_CURATION_API_CONFIG',
 };
 
 export function requestCuration(curationUri, properties) {
@@ -56,5 +57,12 @@ export function hoverCurations(windowId, curationIds) {
   return {
     curationIds,
     type: PluginActionTypes.HOVER_CURATIONS,
+  };
+}
+
+export function initCurationApiConfig(curationApiConfig) {
+  return {
+    curationApiConfig,
+    type: PluginActionTypes.INIT_CURATION_API_CONFIG,
   };
 }
