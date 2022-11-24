@@ -3,7 +3,8 @@ import { getManifest, getVisibleCanvasIds } from 'mirador/dist/es/src/state/sele
 import { miradorSlice } from 'mirador/dist/es/src/state/selectors/utils';
 export var getCurationApi = function getCurationApi(state) {
   if (miradorSlice(state)) {
-    return miradorSlice(state).curations;
+    var _miradorSlice$curatio;
+    return (_miradorSlice$curatio = miradorSlice(state).curations) !== null && _miradorSlice$curatio !== void 0 ? _miradorSlice$curatio : {};
   }
   return {};
 };
@@ -16,7 +17,7 @@ export var getCurationApiConfig = createSelector([getCurationApi], function (cur
 });
 export var getCurationIds = createSelector([getCurationApi], function (_ref2) {
   var curationIds = _ref2.curationIds;
-  return curationIds !== null && curationIds !== void 0 ? curationIds : [];
+  return curationIds;
 });
 export var getCurationItems = createSelector([getCurations, getCurationApiConfig, getManifest], function (curations, _ref3, _ref4) {
   var listAll = _ref3.listAll;

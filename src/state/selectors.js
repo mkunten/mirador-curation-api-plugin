@@ -7,7 +7,7 @@ import { miradorSlice } from 'mirador/dist/es/src/state/selectors/utils';
 
 export const getCurationApi = (state) => {
   if (miradorSlice(state)) {
-    return miradorSlice(state).curations;
+    return miradorSlice(state).curations ?? {};
   }
   return {};
 };
@@ -24,7 +24,7 @@ export const getCurationApiConfig = createSelector(
 
 export const getCurationIds = createSelector(
   [getCurationApi],
-  ({ curationIds }) => curationIds ?? [],
+  ({ curationIds }) => curationIds,
 );
 
 export const getCurationItems = createSelector(

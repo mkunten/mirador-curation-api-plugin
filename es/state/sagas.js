@@ -43,7 +43,7 @@ export function importCurationApiConfig() {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return select(getConfig || {});
+          return select(getConfig);
         case 2:
           _yield$select = _context.sent;
           curationApi = _yield$select.curationApi;

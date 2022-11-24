@@ -40,7 +40,7 @@ const defaultCurationApiConfig = {
 
 // init
 export function* importCurationApiConfig() {
-  const { curationApi } = yield select(getConfig || {});
+  const { curationApi } = yield select(getConfig);
   const uris = [...curationApi.curations];
   yield put(pluginActions.initCurationApiConfig({
     config: {
