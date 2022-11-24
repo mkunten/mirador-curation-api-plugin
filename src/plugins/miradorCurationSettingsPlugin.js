@@ -6,17 +6,17 @@ import * as actions from '../state/actions';
 import { getCurationApiConfig } from '../state/selectors';
 import { CurationSettings } from '../components/CurationSettings';
 
-const mapStateToProps = (state, { windowId }) => ({
-  displayAll: getCurationApiConfig(state, windowId).visible,
-  listAll: getCurationApiConfig(state, windowId).listAll,
+const mapStateToProps = (state) => ({
+  displayAll: getCurationApiConfig(state).visible,
+  listAll: getCurationApiConfig(state).listAll,
 });
 
-const mapDispatchToProps = (dispatch, { windowId }) => ({
+const mapDispatchToProps = (dispatch) => ({
   toggleCurationDisplay: () => {
-    dispatch(actions.toggleCurationDisplay(windowId));
+    dispatch(actions.toggleCurationDisplay());
   },
-  toggleCurationList: () => {
-    dispatch(actions.toggleCurationList(windowId));
+  toggleCurationListAll: () => {
+    dispatch(actions.toggleCurationListAll());
   },
 });
 

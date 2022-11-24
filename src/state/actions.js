@@ -1,44 +1,68 @@
 export const PluginActionTypes = {
+  INIT_CURATION_API_CONFIG: 'mirador-curation-api-pluin/INIT_CURATION_API_CONFIG',
+  ADD_CURATION_ITEMS: 'mirador-curation-api-plugin/ADD_CURATION_ITEMS',
   REQUEST_CURATION: 'mirador-curation-api-plugin/REQUEST_CURATION',
   RECEIVE_CURATION: 'mirador-curation-api-plugin/RECEIVE_CURATION',
   RECEIVE_CURATION_FAILURE: 'mirador-curation-api-plugin/RECEIVE_CURATION_FAILURE',
-  FETCH_CURATION: 'mirador-curation-api-plugin/FETCH_CURATION',
+  CURATION_RESOURCE_UPDATED: 'mirador-curation-api-plugin/CURATION_RESOURCE_UPDATED',
+  UPDATE_MANIFESTS_TO_BE_CHECKED: 'mirador-curation-api/UPDATE_MANIFESTS_TO_BE_CHECKED',
   TOGGLE_CURATION_DISPLAY: 'mirador-curation-api-plugin/TOGGLE_CURATION_DISPLAY',
-  TOGGLE_CURATION_LIST: 'mirador-curation-api-plugin/TOGGLE_CURATION_LIST',
+  TOGGLE_CURATION_LIST_ALL: 'mirador-curation-api-plugin/TOGGLE_CURATION_LIST_ALL',
+  TOGGLE_CURATION_ITEMS_VISIBLE: 'mirador-curation-api-plugin/TOGGLE_CURATION_ITEMS_VISIBLE',
   HOVER_CURATIONS: 'mirador-curation-api-plugin/HOVER_CURATIONS',
-  INIT_CURATION_API_CONFIG: 'mirador-curation-api-pluin/INIT_CURATION_API_CONFIG',
 };
 
-export function requestCuration(curationUri, properties) {
+export function initCurationApiConfig(curationApiConfig) {
   return {
-    curationUri,
-    properties,
+    curationApiConfig,
+    type: PluginActionTypes.INIT_CURATION_API_CONFIG,
+  };
+}
+
+export function addCurationItems(uri, items) {
+  return {
+    uri,
+    items,
+    type: PluginActionTypes.ADD_CURATION_ITEMS,
+  };
+}
+
+export function requestCuration(uri) {
+  return {
+    uri,
     type: PluginActionTypes.REQUEST_CURATION,
   };
 }
 
-export function receiveCuration(curationUri, curationJson, curationItems) {
+export function receiveCuration(uri, json) {
   return {
-    curationUri,
-    curationJson,
-    curationItems,
+    uri,
+    json,
     type: PluginActionTypes.RECEIVE_CURATION,
   };
 }
 
-export function receiveCurationFailure(curationUri, error) {
+export function receiveCurationFailure(uri, error) {
   return {
     error,
-    curationUri,
+    uri,
     type: PluginActionTypes.RECEIVE_CURATION_FAILURE,
   };
 }
 
-export function fetchCuration(curationUri, properties) {
-  return requestCuration(curationUri, {
-    ...properties,
-    isFetching: true,
-  });
+export function curationResourceUpdated(uri) {
+  return {
+    uri,
+    type: PluginActionTypes.CURATION_RESOURCE_UPDATED,
+  };
+}
+
+export function updateManifestsToBeChecked(manifestId, uri) {
+  return {
+    manifestId,
+    uri,
+    type: PluginActionTypes.UPDATE_MANIFESTS_TO_BE_CHECKED,
+  };
 }
 
 export function toggleCurationDisplay() {
@@ -47,22 +71,22 @@ export function toggleCurationDisplay() {
   };
 }
 
-export function toggleCurationList() {
+export function toggleCurationListAll() {
   return {
-    type: PluginActionTypes.TOGGLE_CURATION_LIST,
+    type: PluginActionTypes.TOGGLE_CURATION_LIST_ALL,
   };
 }
 
-export function hoverCurations(windowId, curationIds) {
+export function toggleCurationItemsVisible(uri) {
   return {
-    curationIds,
+    uri,
+    type: PluginActionTypes.TOGGLE_CURATION_ITEMS_VISIBLE,
+  };
+}
+
+export function hoverCurations(windowId, ids) {
+  return {
+    ids,
     type: PluginActionTypes.HOVER_CURATIONS,
-  };
-}
-
-export function initCurationApiConfig(curationApiConfig) {
-  return {
-    curationApiConfig,
-    type: PluginActionTypes.INIT_CURATION_API_CONFIG,
   };
 }

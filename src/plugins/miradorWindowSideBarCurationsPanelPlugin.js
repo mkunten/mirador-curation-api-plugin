@@ -4,29 +4,43 @@ import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import { withPlugins } from 'mirador/dist/es/src/extend/withPlugins';
 import {
-  getVisibleCanvasIds,
+  getContainerId, getVisibleCanvasIds,
 } from 'mirador/dist/es/src/state/selectors';
+import { toggleCurationItemsVisible } from '../state/actions';
 import {
-  getCurationIds, getCurationItems,
+  getCurations, getCurationIds, getCurationItems,
 } from '../state/selectors';
 import { curationsReducer } from '../state/reducers';
 import curationsSaga from '../state/sagas';
 import WindowSideBarCurationsPanel from '../components/WindowSideBarCurationsPanel';
 
 const mapStateToProps = (state, { manifestId, windowId }) => ({
+  containerId: getContainerId(state),
+  curations: getCurations(state),
   curationIds: getCurationIds(state, { windowId }),
   curationItems: getCurationItems(state, { manifestId, windowId }),
   visibleCanvasIds: getVisibleCanvasIds(state, { windowId }),
   windowId,
 });
 
-const styles = (theme) => ({
-  section: {
-    borderBottom: `.5px solid ${theme.palette.section_divider}`,
-    paddingBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-    paddingTop: theme.spacing(2),
+const mapDispatchToProps = (dispatch) => ({
+  toggleCurationItemsVisible: (uri) => {
+    dispatch(toggleCurationItemsVisible(uri));
+  },
+});
+
+const styles = () => ({
+  accordionSummary: {
+    overflowX: 'hidden',
+  },
+  center: {
+    display: 'flex',
+    whiteSpace: 'nowrap',
+    alignItems: 'center',
+  },
+  accordionDetails: {
+    flexWrap: 'wrap',
+    overflow: 'hidden',
   },
   curationIdLink: {
     display: 'inline-block',
@@ -40,7 +54,7 @@ const styles = (theme) => ({
 const enhance = compose(
   withTranslation(),
   withStyles(styles),
-  connect(mapStateToProps, null),
+  connect(mapStateToProps, mapDispatchToProps),
   withPlugins('WindowSideBarCurationsPanel'),
 );
 

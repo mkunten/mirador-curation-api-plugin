@@ -50,46 +50,50 @@ export class CanvasCurations extends Component {
     return (
       <MenuList autoFocusItem variant="selectedMenu">
         {
-            curationItems.map((curation) => (
-              <ScrollTo
-                containerRef={containerRef}
-                key={`${curation.id}-scroll`}
-                offsetTop={96} // offset for the height of the form above
-                scrollTo={selectedIndex === curation.id}
+          Object.values(curationItems).map((items) => items.map((curation) => (
+            <ScrollTo
+              containerRef={containerRef}
+              key={`${curation.id}-scroll`}
+              offsetTop={96} // offset for the height of the form above
+              scrollTo={selectedIndex === curation.id}
+            >
+              <MenuItem
+                button
+                component={listContainerComponent}
+                key={curation.id}
+                className={
+                  visibleCanvasIds
+                    .includes(curation.canvasId)
+                    ? classes.menuItemOnCanvas
+                    : classes.menuItem
+                }
+                curationid={curation.id}
+                selected={selectedIndex === curation.id}
+                onClick={(e) => this.handleClick(e, curation)}
+                onMouseEnter={() => this.handleCurationHover(curation)}
+                onMouseLeave={this.handleCurationBlur}
               >
-                <MenuItem
-                  button
-                  component={listContainerComponent}
-                  key={curation.id}
-                  className={
-                    visibleCanvasIds
-                      .includes(curation.canvasId)
-                      ? classes.menuItemOnCanvas
-                      : classes.menuItem
-                  }
-                  curationid={curation.id}
-                  selected={selectedIndex === curation.id}
-                  onClick={(e) => this.handleClick(e, curation)}
-                  onMouseEnter={() => this.handleCurationHover(curation)}
-                  onMouseLeave={this.handleCurationBlur}
-                >
-                  <div style={{ minWidth: 50 }}>
-                    <img
-                      alt="presentation"
-                      src={`${curation.serviceId}/${curation.region}/60,/0/default.jpg`}
-                      className={classes.image}
-                    />
-                  </div>
-                  <div className={classes.label}>
-                    <SanitizedHtml
-                      ruleSet={htmlSanitizationRuleSet}
-                      htmlString={makeLabel(curation)}
-                    />
-                  </div>
-                </MenuItem>
-              </ScrollTo>
-            ))
-          }
+                {
+                  curation.serviceId && (
+                    <div style={{ minWidth: 50 }}>
+                      <img
+                        alt="presentation"
+                        src={`${curation.serviceId}/${curation.region}/60,/0/default.jpg`}
+                        className={classes.image}
+                      />
+                    </div>
+                  )
+                }
+                <div className={classes.label}>
+                  <SanitizedHtml
+                    ruleSet={htmlSanitizationRuleSet}
+                    htmlString={makeLabel(curation)}
+                  />
+                </div>
+              </MenuItem>
+            </ScrollTo>
+          )))
+        }
       </MenuList>
     );
   }
@@ -97,7 +101,8 @@ export class CanvasCurations extends Component {
 
 CanvasCurations.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  curationItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  curationItems: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object))
+    .isRequired,
   visibleCanvasIds: PropTypes.arrayOf(PropTypes.string)
     .isRequired,
   totalSize: PropTypes.number.isRequired,

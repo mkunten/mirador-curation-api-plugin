@@ -51,21 +51,10 @@ export class CurationsOverlay extends Component {
     // this.onCanvasExit = this.onCanvasExit.bind(this);
   }
 
-  //
-  // /**
-  //  * React lifecycle event
-  //  */
   componentDidMount() {
     this.initializeViewer();
   }
 
-  //
-  // /**
-  //  * When the tileSources change, make sure to close the OSD viewer.
-  //  * When the curations change, reset the updateCanvas method to make sure
-  //  * they are added.
-  //  * When the viewport state changes, pan or zoom the OSD viewer as appropriate
-  //  */
   componentDidUpdate(prevProps) {
     const {
       config,
@@ -106,7 +95,6 @@ export class CurationsOverlay extends Component {
     this.updateCanvas = this.canvasUpdateCallback();
   }
 
-  // /** */
   canvasUpdateCallback() {
     return () => {
       this.osdCanvasOverlay.clear();
@@ -125,31 +113,31 @@ export class CurationsOverlay extends Component {
     const context = this.osdCanvasOverlay.context2d;
     const zoomRatio = viewer.viewport.getZoom(true)
       / viewer.viewport.getMaxZoom();
-    curations.forEach((curation) => {
-      if (!canvasWorld.canvasIds.includes(curation.canvasId)) {
-        return;
-      }
-      const offset = canvasWorld.offsetByCanvas(curation.canvasId);
-      const canvasCurationDisplay = new CanvasAnnotationDisplay({
-        hovered: config.visible,
-        offset,
-        palette: {
-          ...palette,
-          default: {
-            ...palette.default,
-            ...(!config.visible && palette.hidden),
+    Object.values(curations)
+      .forEach((items) => items.forEach((curation) => {
+        if (!canvasWorld.canvasIds.includes(curation.canvasId)) {
+          return;
+        }
+        const offset = canvasWorld.offsetByCanvas(curation.canvasId);
+        const canvasCurationDisplay = new CanvasAnnotationDisplay({
+          hovered: config.visible,
+          offset,
+          palette: {
+            ...palette,
+            default: {
+              ...palette.default,
+              ...(!config.visible && palette.hidden),
+            },
           },
-        },
-        resource: curation,
-        selected: config.selectedCurationIds
-          .includes(curation.id),
-        zoomRatio,
-      });
-      canvasCurationDisplay.toContext(context);
-    });
+          resource: curation,
+          selected: config.selectedCurationIds
+            .includes(curation.id),
+          zoomRatio,
+        });
+        canvasCurationDisplay.toContext(context);
+      }));
   }
 
-  /** */
   renderCurations() {
     const {
       curations,
@@ -187,7 +175,7 @@ export class CurationsOverlay extends Component {
 CurationsOverlay.propTypes = {
   canvasWorld: PropTypes.instanceOf(CanvasWorld).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  curations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  curations: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   config: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types

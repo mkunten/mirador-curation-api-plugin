@@ -16,6 +16,7 @@ const config = {
     listAll: true, // default: true; if false, list only curations belonging to the present manifest file.
     curations: [ // curation json files
       'https://mp.ex.nii.ac.jp/api/curation/json/1bc036ce-87be-4d94-b7cd-4a51cb390b95',
+      'https://mp.ex.nii.ac.jp/api/curation/json/aeaed895-5954-4630-b098-05e711effce8',
     ],
     // makeLabel: (curation) => { // function to create a label
     //   const a = [

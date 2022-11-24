@@ -10,7 +10,7 @@ export class CurationSettings extends Component {
   render() {
     const {
       displayAll, listAll,
-      toggleCurationDisplay, toggleCurationList,
+      toggleCurationDisplay, toggleCurationListAll,
       t,
     } = this.props;
 
@@ -33,7 +33,7 @@ export class CurationSettings extends Component {
           control={(
             <Switch
               checked={listAll}
-              onChange={toggleCurationList}
+              onChange={toggleCurationListAll}
             />
           )}
           label={
@@ -51,7 +51,7 @@ CurationSettings.propTypes = {
   displayAll: PropTypes.bool.isRequired,
   listAll: PropTypes.bool.isRequired,
   toggleCurationDisplay: PropTypes.func.isRequired,
-  toggleCurationList: PropTypes.func.isRequired,
+  toggleCurationListAll: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
   windowId: PropTypes.string.isRequired,
