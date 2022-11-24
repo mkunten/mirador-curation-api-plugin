@@ -3,6 +3,10 @@
 A [Mirador 3](https://projectmirador.org/) plugin to display curation contents on a sidebar.
 See also IIIF [Curation API v1.0](http://codh.rois.ac.jp/iiif/curation/).
 
+## Demo
+
+https://mkunten.github.io/mirador-curation-api-plugin/
+
 ## Example
 
 ```shell
@@ -47,7 +51,6 @@ mirador.viewer(
 
 - test...
 - `<ScrollTo/>` in the sidebar panel does not work
-- to support various patterns of sequences etc.
-- to support IIIF Presentation API 3.0?
+- to use [IIIF-Commons/manifesto](https://github.com/IIIF-Commons/manifesto)?
 - to show pins? (e.g., in case of {metadata.type: pin}?)
-- to open items belongs to another manifest?
+- to load manifests not being loaded yet
