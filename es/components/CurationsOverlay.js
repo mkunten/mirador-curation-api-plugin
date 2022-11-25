@@ -10,49 +10,13 @@ import CanvasWorld from 'mirador/dist/es/src/lib/CanvasWorld';
 import CanvasAnnotationDisplay from 'mirador/dist/es/src/lib/CanvasAnnotationDisplay';
 export var CurationsOverlay = /*#__PURE__*/function (_Component) {
   _inheritsLoose(CurationsOverlay, _Component);
-  /**
-   * curationsMatch - compares previous curations to current to determine
-   * whether to add a new updateCanvas method to draw curations
-   * @param  {Array} currentCurations
-   * @param  {Array} prevCurations
-   * @return {Boolean}
-   */
-  // static curationsMatch(currentCurations, prevCurations) {
-  //   if (!currentCurations && !prevCurations) return true;
-  //   if (
-  //     (currentCurations && !prevCurations)
-  //     || (!currentCurations && prevCurations)
-  //   ) return false;
-  //
-  //   if (currentCurations.length === 0 && prevCurations.length === 0) return true;
-  //   if (currentCurations.length !== prevCurations.length) return false;
-  //   return currentCurations.every((curation, index) => {
-  //     const newIds = curation.resources.map(r => r.id);
-  //     const prevIds = prevCurations[index].resources.map(r => r.id);
-  //     if (newIds.length === 0 && prevIds.length === 0) return true;
-  //     if (newIds.length !== prevIds.length) return false;
-  //
-  //     if ((curation.id === prevCurations[index].id) && (isEqual(newIds, prevIds))) {
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-  // }
-  //
-  // /**
-  //  * @param {Object} props
-  //  */
   function CurationsOverlay(props) {
     var _this;
     _this = _Component.call(this, props) || this;
     _this.ref = React.createRef();
     _this.osdCanvasOverlay = null;
-    // // An initial value for the updateCanvas method
     _this.updateCanvas = function () {};
     _this.onUpdateViewport = _this.onUpdateViewport.bind(_assertThisInitialized(_this));
-    // this.onCanvasClick = this.onCanvasClick.bind(this);
-    // this.onCanvasMouseMove = debounce(this.onCanvasMouseMove.bind(this), 10);
-    // this.onCanvasExit = this.onCanvasExit.bind(this);
     return _this;
   }
   var _proto = CurationsOverlay.prototype;
@@ -64,7 +28,7 @@ export var CurationsOverlay = /*#__PURE__*/function (_Component) {
       config = _this$props.config,
       viewer = _this$props.viewer;
     this.initializeViewer();
-    if (config.visible !== prevProps.config.visible || config.selectedCurationIds !== prevProps.config.selectedCurationIds) {
+    if (config.visible !== prevProps.config.visible || config.hoveredCurationIds !== prevProps.config.hoveredCurationIds) {
       this.updateCanvas = this.canvasUpdateCallback();
       viewer.forceRedraw();
     }
@@ -106,7 +70,7 @@ export var CurationsOverlay = /*#__PURE__*/function (_Component) {
         }
         var offset = canvasWorld.offsetByCanvas(curation.canvasId);
         var canvasCurationDisplay = new CanvasAnnotationDisplay({
-          hovered: config.visible,
+          hovered: config.hoveredCurationIds.includes(curation.id),
           offset: offset,
           palette: _extends({}, palette, {
             "default": _extends({}, palette["default"], !config.visible && palette.hidden)
@@ -123,7 +87,7 @@ export var CurationsOverlay = /*#__PURE__*/function (_Component) {
     var _this$props3 = this.props,
       curations = _this$props3.curations,
       palette = _this$props3.palette;
-    this.curationsToContext(curations, palette.annotations);
+    this.curationsToContext(curations, palette);
   };
   _proto.render = function render() {
     var viewer = this.props.viewer;

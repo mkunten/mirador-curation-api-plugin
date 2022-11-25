@@ -6,7 +6,7 @@ const translations = {
     curationResourceImportLabel: 'URI',
     linkToExternalCuration: 'Link to an external curation',
     listAll: 'List all curations',
-    listOnlyInManifest: 'List Only in manifest',
+    listOnlyInManifest: 'List only in this manifest',
     highlightCurations: 'Highlight curations',
     highlightNoCurations: 'Highlight no curations',
     noCurations: 'Curations are not found',

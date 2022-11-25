@@ -34,7 +34,25 @@ const defaultCurationApiConfig = {
     }
     return a.join('<br/>');
   },
+  palette: {
+    hidden: {
+      globalAlpha: 0,
+    },
+    default: {
+      strokeStyle: '#FF00FF',
+      globalAlpha: 0.5,
+    },
+    hovered: {
+      strokeStyle: '#FF00FF',
+      globalAlpha: 1,
+    },
+    selected: {
+      strokeStyle: '#FF00FF',
+      globalAlpha: 1,
+    },
+  },
   // internal variables
+  hoveredCurationIds: [],
   selectedCurationIds: [],
 };
 

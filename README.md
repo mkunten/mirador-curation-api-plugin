@@ -10,7 +10,7 @@ https://mkunten.github.io/mirador-curation-api-plugin/
 ## Example
 
 ```shell
-$ yarn add https://github.com/mkunten/mirador-curation-api-plugin.git
+$ yarn add https://github.com/mkunten/mirador-curation-api-plugin
 ```
 
 ```javascipt

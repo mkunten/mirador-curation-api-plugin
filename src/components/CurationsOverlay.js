@@ -6,49 +6,13 @@ import CanvasWorld from 'mirador/dist/es/src/lib/CanvasWorld';
 import CanvasAnnotationDisplay from 'mirador/dist/es/src/lib/CanvasAnnotationDisplay';
 
 export class CurationsOverlay extends Component {
-  /**
-   * curationsMatch - compares previous curations to current to determine
-   * whether to add a new updateCanvas method to draw curations
-   * @param  {Array} currentCurations
-   * @param  {Array} prevCurations
-   * @return {Boolean}
-   */
-  // static curationsMatch(currentCurations, prevCurations) {
-  //   if (!currentCurations && !prevCurations) return true;
-  //   if (
-  //     (currentCurations && !prevCurations)
-  //     || (!currentCurations && prevCurations)
-  //   ) return false;
-  //
-  //   if (currentCurations.length === 0 && prevCurations.length === 0) return true;
-  //   if (currentCurations.length !== prevCurations.length) return false;
-  //   return currentCurations.every((curation, index) => {
-  //     const newIds = curation.resources.map(r => r.id);
-  //     const prevIds = prevCurations[index].resources.map(r => r.id);
-  //     if (newIds.length === 0 && prevIds.length === 0) return true;
-  //     if (newIds.length !== prevIds.length) return false;
-  //
-  //     if ((curation.id === prevCurations[index].id) && (isEqual(newIds, prevIds))) {
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-  // }
-  //
-  // /**
-  //  * @param {Object} props
-  //  */
   constructor(props) {
     super(props);
 
     this.ref = React.createRef();
     this.osdCanvasOverlay = null;
-    // // An initial value for the updateCanvas method
     this.updateCanvas = () => {};
     this.onUpdateViewport = this.onUpdateViewport.bind(this);
-    // this.onCanvasClick = this.onCanvasClick.bind(this);
-    // this.onCanvasMouseMove = debounce(this.onCanvasMouseMove.bind(this), 10);
-    // this.onCanvasExit = this.onCanvasExit.bind(this);
   }
 
   componentDidMount() {
@@ -64,7 +28,7 @@ export class CurationsOverlay extends Component {
     this.initializeViewer();
 
     if (config.visible !== prevProps.config.visible
-      || config.selectedCurationIds !== prevProps.config.selectedCurationIds) {
+      || config.hoveredCurationIds !== prevProps.config.hoveredCurationIds) {
       this.updateCanvas = this.canvasUpdateCallback();
       viewer.forceRedraw();
     }
@@ -73,10 +37,7 @@ export class CurationsOverlay extends Component {
   componentWillUnmount() {
     const { viewer } = this.props;
 
-    viewer.removeHandler(
-      'update-viewport',
-      this.onUpdateViewport,
-    );
+    viewer.removeHandler('update-viewport', this.onUpdateViewport);
   }
 
   onUpdateViewport() {
@@ -88,10 +49,7 @@ export class CurationsOverlay extends Component {
     if (!viewer) return;
     if (this.osdCanvasOverlay) return;
     this.osdCanvasOverlay = new OpenSeadragonCanvasOverlay(viewer, this.ref);
-    viewer.addHandler(
-      'update-viewport',
-      this.onUpdateViewport,
-    );
+    viewer.addHandler('update-viewport', this.onUpdateViewport);
     this.updateCanvas = this.canvasUpdateCallback();
   }
 
@@ -99,8 +57,7 @@ export class CurationsOverlay extends Component {
     return () => {
       this.osdCanvasOverlay.clear();
       this.osdCanvasOverlay.resize();
-      this.osdCanvasOverlay
-        .canvasUpdate(this.renderCurations.bind(this));
+      this.osdCanvasOverlay.canvasUpdate(this.renderCurations.bind(this));
     };
   }
 
@@ -120,7 +77,7 @@ export class CurationsOverlay extends Component {
         }
         const offset = canvasWorld.offsetByCanvas(curation.canvasId);
         const canvasCurationDisplay = new CanvasAnnotationDisplay({
-          hovered: config.visible,
+          hovered: config.hoveredCurationIds.includes(curation.id),
           offset,
           palette: {
             ...palette,
@@ -130,8 +87,7 @@ export class CurationsOverlay extends Component {
             },
           },
           resource: curation,
-          selected: config.selectedCurationIds
-            .includes(curation.id),
+          selected: config.selectedCurationIds.includes(curation.id),
           zoomRatio,
         });
         canvasCurationDisplay.toContext(context);
@@ -144,7 +100,7 @@ export class CurationsOverlay extends Component {
       palette,
     } = this.props;
 
-    this.curationsToContext(curations, palette.annotations);
+    this.curationsToContext(curations, palette);
   }
 
   render() {

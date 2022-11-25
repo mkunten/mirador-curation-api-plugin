@@ -131,7 +131,7 @@ export const curationsReducer = (state = {}, action) => {
         ...state,
         config: {
           ...state.config,
-          selectedCurationIds: action.ids,
+          hoveredCurationIds: action.ids,
         },
       };
     }

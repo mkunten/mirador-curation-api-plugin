@@ -38,6 +38,23 @@ const config = {
     //   }
     //   return a.join('<br/>');
     // },
+    // palette: {
+    //   "hidden": { // `Highlight curations` off
+    //     "globalAlpha": 0,
+    //   } ,
+    //   "default": { // `Highlight curations` on
+    //     "strokeStyle": "#FF00FF",
+    //     "globalAlpha": 0.5,
+    //   },
+    //   "hovered": { // a curation item being hovered
+    //     "strokeStyle": "#FF00FF",
+    //     "globalAlpha": 1,
+    //   },
+    //   "selected": { // unused
+    //     "strokeStyle": "#FF00FF",
+    //     "globalAlpha": 1,
+    //   },
+    // },
   },
 };
 

@@ -110,7 +110,7 @@ export var curationsReducer = function curationsReducer(state, action) {
       {
         return _extends({}, state, {
           config: _extends({}, state.config, {
-            selectedCurationIds: action.ids
+            hoveredCurationIds: action.ids
           })
         });
       }

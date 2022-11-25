@@ -2,7 +2,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withPlugins } from 'mirador/dist/es/src/extend/withPlugins';
-import { getCurrentCanvasWorld, getTheme } from 'mirador/dist/es/src/state/selectors';
+import { getCurrentCanvasWorld } from 'mirador/dist/es/src/state/selectors';
 import { getCurationsOnSelectedCanvases, getCurationApiConfig } from '../state/selectors';
 import { CurationsOverlay } from '../components/CurationsOverlay';
 var mapStateToProps = function mapStateToProps(state, _ref) {
@@ -14,10 +14,8 @@ var mapStateToProps = function mapStateToProps(state, _ref) {
     curations: getCurationsOnSelectedCanvases(state, {
       windowId: windowId
     }),
-    config: getCurationApiConfig(state, {
-      windowId: windowId
-    }),
-    palette: getTheme(state).palette
+    config: getCurationApiConfig(state),
+    palette: getCurationApiConfig(state).palette
   };
 };
 var enhance = compose(withTranslation(), connect(mapStateToProps, null), withPlugins('CurationsOverlay'));
