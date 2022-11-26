@@ -19,7 +19,10 @@ export const getCurations = createSelector(
 
 export const getCurationApiConfig = createSelector(
   [getCurationApi],
-  (curations) => curations.config,
+  (curations) => curations.config ?? {
+    hoveredCurationIds: [],
+    selectedCurationIds: [],
+  },
 );
 
 export const getCurationIds = createSelector(
@@ -30,35 +33,52 @@ export const getCurationIds = createSelector(
 export const getCurationItems = createSelector(
   [getCurations, getCurationApiConfig, getManifest],
   (curations, { listAll }, { id }) => {
-    const newItems = {};
+    const curationItems = {};
+    let totalSize = 0;
     Object.entries(curations).forEach(([uri, { items, visible }]) => {
       if (visible) {
-        newItems[uri] = [...(
+        curationItems[uri] = [...(
           listAll
             ? items
             : items.filter((item) => item.manifestId === id)
         )];
+        totalSize += curationItems[uri].length;
       }
     });
-    return newItems;
+    return { curationItems, totalSize };
   },
 );
 
 export const getCurationsOnSelectedCanvases = createSelector(
   [getVisibleCanvasIds, getCurationItems],
-  (canvasIds, items) => {
+  (canvasIds, { curationItems }) => {
     const newItems = {};
-    Object.entries(items).forEach(([uri, cs]) => {
+    let totalSize = 0;
+    Object.entries(curationItems).forEach(([uri, cs]) => {
       const a = cs.filter((c) => canvasIds.includes(c.canvasId));
       if (a.length) {
         newItems[uri] = a;
+        totalSize += a.length;
       }
     });
-    return newItems;
+    return {
+      curationItems: newItems,
+      totalSize,
+    };
   },
 );
 
 export const getManifestsToBeChecked = createSelector(
   [getCurationApi],
   ({ manifestsToBeChecked }) => manifestsToBeChecked ?? {},
+);
+
+export const getHoveredCurationIds = createSelector(
+  [getCurationApi],
+  ({ hoveredCurationIds }) => hoveredCurationIds ?? [],
+);
+
+export const getSelectedCurationIds = createSelector(
+  [getCurationApi],
+  ({ selectedCurationIds }) => selectedCurationIds ?? [],
 );

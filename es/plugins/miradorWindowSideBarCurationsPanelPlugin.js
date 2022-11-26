@@ -1,3 +1,4 @@
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
@@ -12,21 +13,21 @@ import WindowSideBarCurationsPanel from '../components/WindowSideBarCurationsPan
 var mapStateToProps = function mapStateToProps(state, _ref) {
   var manifestId = _ref.manifestId,
     windowId = _ref.windowId;
-  return {
+  return _extends({
     containerId: getContainerId(state),
     curations: getCurations(state),
     curationIds: getCurationIds(state, {
       windowId: windowId
-    }),
-    curationItems: getCurationItems(state, {
-      manifestId: manifestId,
-      windowId: windowId
-    }),
+    })
+  }, getCurationItems(state, {
+    manifestId: manifestId,
+    windowId: windowId
+  }), {
     visibleCanvasIds: getVisibleCanvasIds(state, {
       windowId: windowId
     }),
     windowId: windowId
-  };
+  });
 };
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {

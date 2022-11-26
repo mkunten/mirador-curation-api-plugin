@@ -13,7 +13,7 @@ export var CanvasCurations = /*#__PURE__*/function (_Component) {
     var _this;
     _this = _Component.call(this, props) || this;
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    _this.handleCurationHover = _this.handleCurationHover.bind(_assertThisInitialized(_this));
+    _this.handleCurationSelect = _this.handleCurationSelect.bind(_assertThisInitialized(_this));
     _this.handleCurationBlur = _this.handleCurationBlur.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -24,19 +24,19 @@ export var CanvasCurations = /*#__PURE__*/function (_Component) {
       updateViewerCanvas(curation.canvasId);
     }
   };
-  _proto.handleCurationHover = function handleCurationHover(curation) {
-    var hoverCuration = this.props.hoverCuration;
-    hoverCuration([curation.id]);
+  _proto.handleCurationSelect = function handleCurationSelect(curation) {
+    var selectCurations = this.props.selectCurations;
+    selectCurations([curation.id]);
   };
   _proto.handleCurationBlur = function handleCurationBlur() {
-    var hoverCuration = this.props.hoverCuration;
-    hoverCuration([]);
+    var selectCurations = this.props.selectCurations;
+    selectCurations([]);
   };
   _proto.render = function render() {
     var _this2 = this;
     var _this$props = this.props,
-      totalSize = _this$props.totalSize,
       curationItems = _this$props.curationItems,
+      totalSize = _this$props.totalSize,
       visibleCanvasIds = _this$props.visibleCanvasIds,
       containerRef = _this$props.containerRef,
       selectedIndex = _this$props.selectedIndex,
@@ -69,7 +69,7 @@ export var CanvasCurations = /*#__PURE__*/function (_Component) {
             return _this2.handleClick(e, curation);
           },
           onMouseEnter: function onMouseEnter() {
-            return _this2.handleCurationHover(curation);
+            return _this2.handleCurationSelect(curation);
           },
           onMouseLeave: _this2.handleCurationBlur
         }, curation.serviceId && /*#__PURE__*/React.createElement("div", {
@@ -94,8 +94,8 @@ export var CanvasCurations = /*#__PURE__*/function (_Component) {
 CanvasCurations.propTypes = process.env.NODE_ENV !== "production" ? {
   // eslint-disable-next-line react/forbid-prop-types
   curationItems: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
-  visibleCanvasIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   totalSize: PropTypes.number.isRequired,
+  visibleCanvasIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedIndex: PropTypes.number,
   classes: PropTypes.objectOf(PropTypes.string),
   htmlSanitizationRuleSet: PropTypes.string,
@@ -104,7 +104,7 @@ CanvasCurations.propTypes = process.env.NODE_ENV !== "production" ? {
   // eslint-disable-next-line react/forbid-prop-types
   containerRef: PropTypes.object.isRequired,
   updateViewerCanvas: PropTypes.func.isRequired,
-  hoverCuration: PropTypes.func.isRequired,
+  selectCurations: PropTypes.func.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
   windowId: PropTypes.string.isRequired
 } : {};

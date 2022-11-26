@@ -51,9 +51,6 @@ const defaultCurationApiConfig = {
       globalAlpha: 1,
     },
   },
-  // internal variables
-  hoveredCurationIds: [],
-  selectedCurationIds: [],
 };
 
 // init

@@ -41,14 +41,12 @@ export default class WindowSideBarCurationsPanel extends Component {
 
   render() {
     const {
-      curations, curationIds, curationItems,
+      curations, curationIds, curationItems, totalSize,
       visibleCanvasIds,
       classes, id, t, windowId,
       containerId,
       toggleCurationItemsVisible,
     } = this.props;
-    const totalSize = Object.values(curationItems)
-      .reduce((total, items) => total + items.length, 0);
     const container = document
       .querySelector(`#${containerId} .${ns('viewer')}`);
     const { containerRef } = this;
@@ -154,6 +152,7 @@ WindowSideBarCurationsPanel.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   curationItems: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object))
     .isRequired,
+  totalSize: PropTypes.number.isRequired,
   visibleCanvasIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.objectOf(PropTypes.string),
   id: PropTypes.string.isRequired,

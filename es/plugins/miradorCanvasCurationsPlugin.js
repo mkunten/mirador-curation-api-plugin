@@ -5,14 +5,11 @@ import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import { withPlugins } from 'mirador/dist/es/src/extend/withPlugins';
 import * as actions from 'mirador/dist/es/src/state/actions';
-import { hoverCurations } from '../state/actions';
+import { selectCurations as _selectCurations } from '../state/actions';
 import { getCurationApiConfig } from '../state/selectors';
 import { CanvasCurations } from '../components/CanvasCurations';
 var mapStateToProps = function mapStateToProps(state) {
-  if (state) {
-    return _extends({}, getCurationApiConfig(state));
-  }
-  return null;
+  return _extends({}, getCurationApiConfig(state));
 };
 var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref) {
   var windowId = _ref.windowId;
@@ -20,8 +17,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref) {
     updateViewerCanvas: function updateViewerCanvas(canvasId) {
       return dispatch(actions.setCanvas(windowId, canvasId));
     },
-    hoverCuration: function hoverCuration(curationIds) {
-      return dispatch(hoverCurations(windowId, curationIds));
+    selectCurations: function selectCurations(curationIds) {
+      return dispatch(_selectCurations(windowId, curationIds));
     }
   };
 };

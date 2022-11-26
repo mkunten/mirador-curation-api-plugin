@@ -47,10 +47,7 @@ var defaultCurationApiConfig = {
       strokeStyle: '#FF00FF',
       globalAlpha: 1
     }
-  },
-  // internal variables
-  hoveredCurationIds: [],
-  selectedCurationIds: []
+  }
 };
 
 // init

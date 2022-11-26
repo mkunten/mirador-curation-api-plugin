@@ -1,6 +1,6 @@
 {
   "name": "mirador-curation-api-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Mirador 3 Plugin to show curations based on Curation API 1.0",
   "main": "lib/index.js",
   "module": "es/index.js",

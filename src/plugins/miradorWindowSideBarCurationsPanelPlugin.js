@@ -18,7 +18,7 @@ const mapStateToProps = (state, { manifestId, windowId }) => ({
   containerId: getContainerId(state),
   curations: getCurations(state),
   curationIds: getCurationIds(state, { windowId }),
-  curationItems: getCurationItems(state, { manifestId, windowId }),
+  ...getCurationItems(state, { manifestId, windowId }),
   visibleCanvasIds: getVisibleCanvasIds(state, { windowId }),
   windowId,
 });

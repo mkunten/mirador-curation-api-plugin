@@ -54,6 +54,7 @@ var WindowSideBarCurationsPanel = /*#__PURE__*/function (_Component) {
       curations = _this$props.curations,
       curationIds = _this$props.curationIds,
       curationItems = _this$props.curationItems,
+      totalSize = _this$props.totalSize,
       visibleCanvasIds = _this$props.visibleCanvasIds,
       classes = _this$props.classes,
       id = _this$props.id,
@@ -61,9 +62,6 @@ var WindowSideBarCurationsPanel = /*#__PURE__*/function (_Component) {
       windowId = _this$props.windowId,
       containerId = _this$props.containerId,
       toggleCurationItemsVisible = _this$props.toggleCurationItemsVisible;
-    var totalSize = Object.values(curationItems).reduce(function (total, items) {
-      return total + items.length;
-    }, 0);
     var container = document.querySelector("#" + containerId + " ." + ns('viewer'));
     var containerRef = this.containerRef;
     var dialog = this.state.dialog;
@@ -142,6 +140,7 @@ WindowSideBarCurationsPanel.propTypes = process.env.NODE_ENV !== "production" ? 
   curationIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   curationItems: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+  totalSize: PropTypes.number.isRequired,
   visibleCanvasIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.objectOf(PropTypes.string),
   id: PropTypes.string.isRequired,

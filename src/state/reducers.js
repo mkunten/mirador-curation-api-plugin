@@ -129,10 +129,13 @@ export const curationsReducer = (state = {}, action) => {
     case PluginActionTypes.HOVER_CURATIONS: {
       return {
         ...state,
-        config: {
-          ...state.config,
-          hoveredCurationIds: action.ids,
-        },
+        hoveredCurationIds: action.curationIds,
+      };
+    }
+    case PluginActionTypes.SELECT_CURATIONS: {
+      return {
+        ...state,
+        selectedCurationIds: action.curationIds,
       };
     }
     default: {
