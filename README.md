@@ -1,7 +1,6 @@
 # mirador-curation-api-plugin
 
-A [Mirador 3](https://projectmirador.org/) plugin to display curation contents on a sidebar.
-See also IIIF [Curation API v1.0](http://codh.rois.ac.jp/iiif/curation/).
+A [Mirador 3](https://projectmirador.org/) plugin to show curations based on IIIF [Curation API v1.0](http://codh.rois.ac.jp/iiif/curation/).
 
 ## Demo
 
@@ -43,9 +42,7 @@ mirador.viewer(
 
 ## Limitations
 
-- only supports, in terms of IIIF Presentation API,
-    + mainly version 2.1 (also is Curation API v1.0)
-    + rather simple patterns of sequences, canvases, metadata and so on
+- only supports rather simple patterns of sequences, canvases, metadata and so on
 
 ## Todos
 

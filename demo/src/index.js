@@ -14,7 +14,7 @@ const config = {
   curationApi: { // default values
     visible: true, // default: true
     listAll: true, // default: true; if false, list only curations belonging to the present manifest file.
-    curations: [ // curation json files
+    curations: [ // curation resources
       'https://mp.ex.nii.ac.jp/api/curation/json/1bc036ce-87be-4d94-b7cd-4a51cb390b95',
       'https://mp.ex.nii.ac.jp/api/curation/json/aeaed895-5954-4630-b098-05e711effce8',
     ],
@@ -46,11 +46,11 @@ const config = {
     //     "strokeStyle": "#FF00FF",
     //     "globalAlpha": 0.5,
     //   },
-    //   "hovered": { // a curation item being hovered
+    //   "hovered": { // on a rect being hovered
     //     "strokeStyle": "#FF00FF",
     //     "globalAlpha": 1,
     //   },
-    //   "selected": { // unused
+    //   "selected": { // on a listed item being hovered
     //     "strokeStyle": "#FF00FF",
     //     "globalAlpha": 1,
     //   },
