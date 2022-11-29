@@ -23,16 +23,16 @@ export var getCurationIds = createSelector([getCurationApi], function (_ref2) {
   var curationIds = _ref2.curationIds;
   return curationIds;
 });
-export var getCurationItems = createSelector([getCurations, getCurationApiConfig, getManifest], function (curations, _ref3, _ref4) {
+export var getCurationItems = createSelector([getCurations, getCurationApiConfig, getManifest], function (curations, _ref3, manifest) {
   var listAll = _ref3.listAll;
-  var id = _ref4.id;
+  var id = manifest.id || '';
   var curationItems = {};
   var totalSize = 0;
-  Object.entries(curations).forEach(function (_ref5) {
-    var uri = _ref5[0],
-      _ref5$ = _ref5[1],
-      items = _ref5$.items,
-      visible = _ref5$.visible;
+  Object.entries(curations).forEach(function (_ref4) {
+    var uri = _ref4[0],
+      _ref4$ = _ref4[1],
+      items = _ref4$.items,
+      visible = _ref4$.visible;
     if (visible) {
       curationItems[uri] = [].concat(listAll ? items : items.filter(function (item) {
         return item.manifestId === id;
@@ -45,13 +45,13 @@ export var getCurationItems = createSelector([getCurations, getCurationApiConfig
     totalSize: totalSize
   };
 });
-export var getCurationsOnSelectedCanvases = createSelector([getVisibleCanvasIds, getCurationItems], function (canvasIds, _ref6) {
-  var curationItems = _ref6.curationItems;
+export var getCurationsOnSelectedCanvases = createSelector([getVisibleCanvasIds, getCurationItems], function (canvasIds, _ref5) {
+  var curationItems = _ref5.curationItems;
   var newItems = {};
   var totalSize = 0;
-  Object.entries(curationItems).forEach(function (_ref7) {
-    var uri = _ref7[0],
-      cs = _ref7[1];
+  Object.entries(curationItems).forEach(function (_ref6) {
+    var uri = _ref6[0],
+      cs = _ref6[1];
     var a = cs.filter(function (c) {
       return canvasIds.includes(c.canvasId);
     });
@@ -65,15 +65,15 @@ export var getCurationsOnSelectedCanvases = createSelector([getVisibleCanvasIds,
     totalSize: totalSize
   };
 });
-export var getManifestsToBeChecked = createSelector([getCurationApi], function (_ref8) {
-  var manifestsToBeChecked = _ref8.manifestsToBeChecked;
+export var getManifestsToBeChecked = createSelector([getCurationApi], function (_ref7) {
+  var manifestsToBeChecked = _ref7.manifestsToBeChecked;
   return manifestsToBeChecked !== null && manifestsToBeChecked !== void 0 ? manifestsToBeChecked : {};
 });
-export var getHoveredCurationIds = createSelector([getCurationApi], function (_ref9) {
-  var hoveredCurationIds = _ref9.hoveredCurationIds;
+export var getHoveredCurationIds = createSelector([getCurationApi], function (_ref8) {
+  var hoveredCurationIds = _ref8.hoveredCurationIds;
   return hoveredCurationIds !== null && hoveredCurationIds !== void 0 ? hoveredCurationIds : [];
 });
-export var getSelectedCurationIds = createSelector([getCurationApi], function (_ref10) {
-  var selectedCurationIds = _ref10.selectedCurationIds;
+export var getSelectedCurationIds = createSelector([getCurationApi], function (_ref9) {
+  var selectedCurationIds = _ref9.selectedCurationIds;
   return selectedCurationIds !== null && selectedCurationIds !== void 0 ? selectedCurationIds : [];
 });

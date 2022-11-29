@@ -8,12 +8,14 @@ import { hoverCurations as _hoverCurations } from '../state/actions';
 import { getCurationsOnSelectedCanvases, getCurationApiConfig, getHoveredCurationIds, getSelectedCurationIds } from '../state/selectors';
 import { CurationsOverlay } from '../components/CurationsOverlay';
 var mapStateToProps = function mapStateToProps(state, _ref) {
-  var windowId = _ref.windowId;
+  var manifestId = _ref.manifestId,
+    windowId = _ref.windowId;
   return _extends({
     canvasWorld: getCurrentCanvasWorld(state, {
       windowId: windowId
     })
   }, getCurationsOnSelectedCanvases(state, {
+    manifestId: manifestId,
     windowId: windowId
   }), {
     hoveredCurationIds: getHoveredCurationIds(state),

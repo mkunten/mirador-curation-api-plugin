@@ -269,7 +269,7 @@ function onCurationResourceUpdated(_ref6) {
               break;
             }
             return _context6.delegateYield( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-              var manifests, canvasIds, map, items, curationId, curationLabel, _loop, i;
+              var manifests, canvasIds, map, items, curationId, curationLabel, _loop, i, manifestsToBeChecked;
               return _regeneratorRuntime().wrap(function _callee3$(_context5) {
                 while (1) {
                   switch (_context5.prev = _context5.next) {
@@ -360,6 +360,15 @@ function onCurationResourceUpdated(_ref6) {
                       _context5.next = 18;
                       return put(pluginActions.addCurationItems(uri, items));
                     case 18:
+                      _context5.next = 20;
+                      return select(getManifestsToBeChecked);
+                    case 20:
+                      manifestsToBeChecked = _context5.sent;
+                      if (manifestsToBeChecked) {
+                        // eslint-disable-next-line no-console
+                        console.warn('manifests to be checked still exist:', manifestsToBeChecked);
+                      }
+                    case 22:
                     case "end":
                       return _context5.stop();
                   }
@@ -381,10 +390,9 @@ function onCurationResourceUpdated(_ref6) {
   })();
 }
 function onManifestUpdated(_ref7) {
-  var manifestId = _ref7.manifestId,
-    manifestJson = _ref7.manifestJson;
+  var manifestId = _ref7.manifestId;
   return /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-    var manifestsToBeChecked;
+    var manifestsToBeChecked, uris, i;
     return _regeneratorRuntime().wrap(function _callee5$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
@@ -393,11 +401,27 @@ function onManifestUpdated(_ref7) {
             return select(getManifestsToBeChecked);
           case 2:
             manifestsToBeChecked = _context7.sent;
-            if (manifestsToBeChecked[manifestId]) {
-              // eslint-disable-next-line no-console
-              console.warn('manifests to be checked still exist:', manifestsToBeChecked, manifestJson);
+            if (!(manifestsToBeChecked && manifestsToBeChecked[manifestId])) {
+              _context7.next = 14;
+              break;
             }
-          case 4:
+            uris = [].concat(manifestsToBeChecked[manifestId]);
+            _context7.next = 7;
+            return put(pluginActions.updateManifestsToBeChecked(manifestId));
+          case 7:
+            i = 0;
+          case 8:
+            if (!(i < uris.length)) {
+              _context7.next = 14;
+              break;
+            }
+            _context7.next = 11;
+            return put(pluginActions.curationResourceUpdated(uris[i]));
+          case 11:
+            i += 1;
+            _context7.next = 8;
+            break;
+          case 14:
           case "end":
             return _context7.stop();
         }

@@ -32,7 +32,8 @@ export const getCurationIds = createSelector(
 
 export const getCurationItems = createSelector(
   [getCurations, getCurationApiConfig, getManifest],
-  (curations, { listAll }, { id }) => {
+  (curations, { listAll }, manifest) => {
+    const id = manifest.id || '';
     const curationItems = {};
     let totalSize = 0;
     Object.entries(curations).forEach(([uri, { items, visible }]) => {

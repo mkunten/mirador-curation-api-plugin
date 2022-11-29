@@ -12,8 +12,8 @@ import {
   CurationTooltipsOverlay,
 } from '../components/CurationTooltipsOverlay';
 
-const mapStateToProps = (state, { windowId }) => ({
-  ...getCurationsOnSelectedCanvases(state, { windowId }),
+const mapStateToProps = (state, { manifestId, windowId }) => ({
+  ...getCurationsOnSelectedCanvases(state, { manifestId, windowId }),
   hoveredCurationIds: getHoveredCurationIds(state),
   makeLabel: getCurationApiConfig(state).makeLabel,
   // palette: getCurationApiConfig(state).palette,

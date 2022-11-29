@@ -213,22 +213,28 @@ function* onCurationResourceUpdated({ uri }) {
       }
     }
     yield put(pluginActions.addCurationItems(uri, items));
+    const manifestsToBeChecked = yield select(getManifestsToBeChecked);
+    if (manifestsToBeChecked) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'manifests to be checked still exist:',
+        manifestsToBeChecked,
+      );
+    }
   } else {
     // eslint-disable-next-line no-console
     console.error(`${uri} is invalid:`, json);
   }
 }
 
-function* onManifestUpdated({ manifestId, manifestJson }) {
-  // todo: check curations.manifestsToBeChecked
+function* onManifestUpdated({ manifestId }) {
   const manifestsToBeChecked = yield select(getManifestsToBeChecked);
-  if (manifestsToBeChecked[manifestId]) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      'manifests to be checked still exist:',
-      manifestsToBeChecked,
-      manifestJson,
-    );
+  if (manifestsToBeChecked && manifestsToBeChecked[manifestId]) {
+    const uris = [...manifestsToBeChecked[manifestId]];
+    yield put(pluginActions.updateManifestsToBeChecked(manifestId));
+    for (let i = 0; i < uris.length; i += 1) {
+      yield put(pluginActions.curationResourceUpdated(uris[i]));
+    }
   }
 }
 

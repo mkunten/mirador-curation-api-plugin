@@ -10,9 +10,9 @@ import {
 } from '../state/selectors';
 import { CurationsOverlay } from '../components/CurationsOverlay';
 
-const mapStateToProps = (state, { windowId }) => ({
+const mapStateToProps = (state, { manifestId, windowId }) => ({
   canvasWorld: getCurrentCanvasWorld(state, { windowId }),
-  ...getCurationsOnSelectedCanvases(state, { windowId }),
+  ...getCurationsOnSelectedCanvases(state, { manifestId, windowId }),
   hoveredCurationIds: getHoveredCurationIds(state),
   selectedCurationIds: getSelectedCurationIds(state),
   palette: getCurationApiConfig(state).palette,

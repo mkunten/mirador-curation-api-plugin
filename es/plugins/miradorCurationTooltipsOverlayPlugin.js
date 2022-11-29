@@ -7,8 +7,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { getCurationApiConfig, getCurationsOnSelectedCanvases, getHoveredCurationIds } from '../state/selectors';
 import { CurationTooltipsOverlay } from '../components/CurationTooltipsOverlay';
 var mapStateToProps = function mapStateToProps(state, _ref) {
-  var windowId = _ref.windowId;
+  var manifestId = _ref.manifestId,
+    windowId = _ref.windowId;
   return _extends({}, getCurationsOnSelectedCanvases(state, {
+    manifestId: manifestId,
     windowId: windowId
   }), {
     hoveredCurationIds: getHoveredCurationIds(state),
